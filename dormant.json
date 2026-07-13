@@ -1,0 +1,15 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "RedS41ft shared preset — DORMANT repos. Inherits the default preset, then automerges everything (majors included) on a monthly schedule.",
+  "extends": ["local>RedS41ft/renovate-config"],
+  "schedule": ["before 6am on the first day of the month"],
+  "prConcurrentLimit": 2,
+  "packageRules": [
+    {
+      "description": "Dormant tail: automerge everything that passes checks, majors included",
+      "matchUpdateTypes": ["major", "minor", "patch", "pin", "digest"],
+      "automerge": true,
+      "groupName": "all updates"
+    }
+  ]
+}
