@@ -8,6 +8,7 @@
     "helpers:pinGitHubActionDigests"
   ],
   "timezone": "Europe/London",
+  "platformAutomerge": false,
   "schedule": ["before 6am on monday"],
   "prConcurrentLimit": 5,
   "prHourlyLimit": 2,
