@@ -37,6 +37,11 @@
       "matchUpdateTypes": ["minor"],
       "groupName": "core frameworks",
       "automerge": false
+    },
+    {
+      "description": "typescript-eslint has no TS 7 support and none is imminent (ESLint needs async-parser support first, which the maintainers called 'many months away' as of Sept 2026 - see typescript-eslint/typescript-eslint#10940). It hard-errors on import under TS 7, it's not just a stale peer range. Hold at TS 6 until that lands, then remove this rule.",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7.0.0"
     }
   ],
   "vulnerabilityAlerts": {
