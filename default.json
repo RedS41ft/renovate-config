@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "RedS41ft shared preset — ACTIVE repos. Non-major updates automerge behind CI; majors and core frameworks wait for review.",
+  "description": "RedS41ft shared preset — ACTIVE repos. Non-major updates automerge behind CI as soon as checks pass; majors and core frameworks wait for review. New branches open on a daily check.",
   "extends": [
     "config:recommended",
     ":dependencyDashboard",
@@ -9,7 +9,8 @@
   ],
   "timezone": "Europe/London",
   "platformAutomerge": false,
-  "schedule": ["before 6am on monday"],
+  "schedule": ["before 6am"],
+  "automergeSchedule": ["at any time"],
   "prConcurrentLimit": 5,
   "prHourlyLimit": 2,
   "labels": ["dependencies"],

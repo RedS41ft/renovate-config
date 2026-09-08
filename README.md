@@ -2,7 +2,7 @@
 
 Shared Renovate presets for the whole org. Policy lives here and nowhere else.
 
-- `default.json` — active repos. Patch/minor/pin/digest automerge behind CI; majors and core frameworks (FastAPI, SQLAlchemy, React, Vite) wait for review. Weekly, Monday pre-6am, Europe/London.
+- `default.json` — active repos. Patch/minor/pin/digest automerge behind CI as soon as checks pass (`automergeSchedule: "at any time"`); majors and core frameworks (FastAPI, SQLAlchemy, React, Vite) wait for review. New branches open on a daily pre-6am check, Europe/London.
 - `dormant.json` — long-tail repos. Inherits default, then automerges everything monthly.
 
 Repos opt in with a one-line `renovate.json`:
@@ -32,14 +32,24 @@ https://github.com/apps/renovate — install on the RedS41ft org, all repositori
 Renovate opens an onboarding PR per repo. Because `RedS41ft/renovate-config`
 exists, onboarding PRs will propose extending it automatically.
 
-### 3. Enable GitHub auto-merge on every repo
+### 3. ~~Enable GitHub auto-merge on every repo~~ — not needed, and doesn't work here
 
-Renovate uses platform automerge by default, which needs `allow_auto_merge`:
+`default.json` sets `platformAutomerge: false`, so Renovate merges PRs itself
+via the API — it does not use GitHub's native "auto-merge" button, and this
+repo's `allow_auto_merge` setting is irrelevant to it either way.
 
-```bash
-gh repo list RedS41ft --limit 100 --json name -q '.[].name' | \
-  xargs -I{} gh api -X PATCH "repos/RedS41ft/{}" -f allow_auto_merge=true
-```
+This also couldn't have worked as originally written: GitHub's native
+auto-merge (and branch protection generally) requires GitHub Pro for private
+repos on a personal account — the API silently no-ops the field on a private
+repo (`gh api -X PATCH repos/{owner}/{repo} -f allow_auto_merge=true` returns
+200 but leaves the setting `false`). It only really takes effect on public
+repos.
+
+What Renovate's self-merge actually needs is `automergeSchedule: ["at any
+time"]` — without it, merging is bundled into the same run as branch
+creation, so a PR that goes green mid-week just sits until the next
+scheduled run instead of merging the moment CI passes. That's set in
+`default.json`.
 
 ### 4. Batch-merge the onboarding PRs
 
