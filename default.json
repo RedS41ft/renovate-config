@@ -42,6 +42,14 @@
       "description": "typescript-eslint has no TS 7 support and none is imminent (ESLint needs async-parser support first, which the maintainers called 'many months away' as of Sept 2026 - see typescript-eslint/typescript-eslint#10940). It hard-errors on import under TS 7, it's not just a stale peer range. Hold at TS 6 until that lands, then remove this rule.",
       "matchPackageNames": ["typescript"],
       "allowedVersions": "<7.0.0"
+    },
+    {
+      "description": "Python runtime (.python-version): a minor bump (3.14 -> 3.15) changes the interpreter, has to match the repo's Docker base image (which Renovate does not track), and may land on a pre-release. Open a PR for review instead of automerging. Patch bumps still automerge.",
+      "matchPackageNames": ["python"],
+      "matchUpdateTypes": ["major", "minor"],
+      "groupName": "python runtime",
+      "automerge": false,
+      "labels": ["dependencies", "python-runtime"]
     }
   ],
   "vulnerabilityAlerts": {
