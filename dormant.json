@@ -10,6 +10,14 @@
       "matchUpdateTypes": ["major", "minor", "patch", "pin", "digest"],
       "automerge": true,
       "groupName": "all updates"
+    },
+    {
+      "description": "Re-apply the default preset's Python runtime rule: the catch-all above would otherwise automerge a 3.14 -> 3.15 bump that breaks Docker builds.",
+      "matchPackageNames": ["python"],
+      "matchUpdateTypes": ["major", "minor"],
+      "groupName": "python runtime",
+      "automerge": false,
+      "labels": ["dependencies", "python-runtime"]
     }
   ]
 }
